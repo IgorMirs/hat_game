@@ -1,9 +1,16 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game() : m_window({1920u, 1080u}, "Hat Game"), m_status(NO_INPUT) {
+Game::Game() :  m_window({1920u, 1080u}, "Hat Game"), m_status(NO_INPUT), 
+                input_msg(""), numberOfTeams(0) 
+{
     m_window.setFramerateLimit(144);
     loadFont(m_font);
+    m_msg.setString("");
+    m_input.setString("");
+    setText(m_msg);
+    setText(m_input);
+    m_input.setPosition(40, 55);
 }
 
 void Game::run() {
@@ -13,24 +20,35 @@ void Game::run() {
             if (event.type == sf::Event::Closed) {
                 m_window.close();
             }
-            else if (event.type == sf::Event::KeyPressed) {
-                m_status = TEAMS_NUMBER_ENTERED;
+            else if (event.type == sf::Event::TextEntered) {
+                if (event.text.unicode > '1' && event.text.unicode <= '9') {
+                    input_msg.clear();
+                    input_msg += event.text.unicode;
+                    m_input.setString(input_msg);
+                }
+                else if (event.text.unicode == '\n' && m_status == NO_INPUT) { //number of teams is entered
+                    input_msg = m_input.getString();
+                    numberOfTeams = std::stoi(input_msg);
+                    m_status = TEAMS_NUMBER_ENTERED;
+                    std::cout << "Number of teams " << numberOfTeams << std::endl;
+                    input_msg.clear();
+                }
             }
         }
 
         m_window.clear();
-        setText();
         getMsg();
         m_window.draw(m_msg);
+        m_window.draw(m_input);
         m_window.display();
     }
 }
 
-void Game::setText() {
-    m_msg.setCharacterSize(50);
-    m_msg.setFont(m_font);
-    m_msg.setFillColor(sf::Color::White);
-    m_msg.setStyle(sf::Text::Bold);
+void Game::setText(sf::Text& text) {
+    text.setCharacterSize(50);
+    text.setFont(m_font);
+    text.setFillColor(sf::Color::White);
+    text.setStyle(sf::Text::Bold);
 }
 
 void Game::getMsg() {
