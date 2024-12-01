@@ -7,12 +7,13 @@ class StartState : public GameState {
 public:
     StartState(Game* game);
 
-    void handle_input();
+    void handle_input(const sf::Event& event);
     void update(sf::Time delta);
     void draw(sf::RenderWindow& window);
-
+    
 private:
     sf::Text start_prompt;
+    bool displayText;
 };
 
 #endif

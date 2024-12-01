@@ -4,22 +4,30 @@
 
 StartState::StartState(Game* game) : GameState(game) 
 {
-    configureText(start_prompt);
-    start_prompt.setString("START GAME");
-    // start_prompt.setCharacterSize(50);
-    // start_prompt.setFont(game->getFont());
-    // start_prompt.setFillColor(sf::Color::White);
-    // start_prompt.setStyle(sf::Text::Bold);
+    configureText(start_prompt); //set text parameters
+    start_prompt.setString("PRESS SPACE TO START THE GAME");
+    start_prompt.setOrigin(start_prompt.getGlobalBounds().getSize() / 2.f + start_prompt.getLocalBounds().getPosition());
+    start_prompt.setPosition(game->getWindowWidth() / 2.f, game->getWindowHeight() / 2.f);
+    displayText = true;
 }
 
-void StartState::handle_input() {
-
+void StartState::handle_input(const sf::Event& event) {
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+        getGame()->changeGameState(GameState::GET_TEAMS);
+    }
 }
      
 void StartState::update(sf::Time delta) {
+    static sf::Time timeBuffer = sf::Time::Zero; 
+    timeBuffer += delta;
 
+    if ((int) timeBuffer.asSeconds() % 100 == 0) {
+        displayText = !displayText;
+    }
 }
     
 void StartState::draw(sf::RenderWindow& window) {
-    window.draw(start_prompt);
+    if (displayText == false) {
+        window.draw(start_prompt);
+    }
 }

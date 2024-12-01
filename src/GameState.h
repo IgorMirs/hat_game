@@ -19,30 +19,13 @@ public:
 
     void configureText(sf::Text& text);
 
-    virtual void handle_input() = 0;
+    virtual void handle_input(const sf::Event& event) = 0;
     virtual void update(sf::Time delta) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
 
 private:
     Game* m_game;
 };
-
-
-
-
-
-
-
-class GetTeams : public GameState {
-public:
-    GetTeams(Game* game);
-
-    void handle_input();
-    void update(sf::Time delta);
-    void draw(sf::RenderWindow& window);
-};
-
-
 
 
 #endif
