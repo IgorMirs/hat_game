@@ -14,6 +14,7 @@ public:
     enum State {
         START,
         GET_TEAMS,
+        GET_WORDS,
         COUNT
     };
 
