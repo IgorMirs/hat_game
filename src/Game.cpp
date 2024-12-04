@@ -5,7 +5,8 @@
 ////////////////////////////////////////////////////////////
 Game::Game() :  
 m_window        ({1920u, 1080u}, "Hat Game"),
-numberOfTeams   (0) 
+numberOfPlayers (0),
+numberOfTeams   (0)
 {
     m_window.setFramerateLimit(144);
     loadFont(m_font);
@@ -79,4 +80,24 @@ unsigned Game::getWindowWidth() const {
 unsigned Game::getWindowHeight() const {
     sf::Vector2u v = m_window.getSize();
     return v.y;
+}
+
+////////////////////////////////////////////////////////////
+void Game::setNumberOfPlayers(int np) {
+    numberOfPlayers = np;
+}
+
+////////////////////////////////////////////////////////////
+void Game::setNumberOfTeams(int nt) {
+    numberOfTeams = nt;
+}
+
+////////////////////////////////////////////////////////////
+int Game::getNumberOfPlayers() {
+    return numberOfPlayers;
+}
+
+////////////////////////////////////////////////////////////
+int Game::getNumberOfTeams() {
+    return numberOfTeams;
 }

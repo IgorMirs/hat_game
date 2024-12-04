@@ -13,16 +13,20 @@ public:
     Game();
     ~Game();
 
-    void run();
-    void setText(sf::Text& text);
+    void        run();
+    void        setText(sf::Text& text);
 
-    sf::Font& getFont();
+    sf::Font&   getFont();
     
-    unsigned getWindowWidth() const;
-    unsigned getWindowHeight() const;
+    unsigned    getWindowWidth() const;
+    unsigned    getWindowHeight() const;
 
-    void changeGameState(GameState::State gameState);
+    void        changeGameState(GameState::State gameState);
 
+    void        setNumberOfPlayers(int np);
+    void        setNumberOfTeams(int np);
+    int         getNumberOfPlayers();
+    int         getNumberOfTeams();
 private:
     sf::RenderWindow m_window;
     GameState* m_currentState;
@@ -30,7 +34,8 @@ private:
     sf::Font m_font;
     void loadFont(sf::Font& font);
 
-    int numberOfTeams; //TODO remove
+    int numberOfPlayers;
+    int numberOfTeams;
 };
 
 #endif //GAME_H
