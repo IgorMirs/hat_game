@@ -1,9 +1,10 @@
 #include "GameState.h"
 #include "Game.h"
 
-GameState::GameState(Game* game)
-    :m_game(game) 
+GameState::GameState(Game* game) :
+m_game(game)
 {
+
 }
 
 GameState::~GameState()

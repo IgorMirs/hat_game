@@ -4,12 +4,14 @@
 #include "SFML/Graphics.hpp"
 
 class Game;
+class GameStat;
 
 class GameState {
 public:
     GameState(Game* game);
     virtual ~GameState();
     Game* getGame() const;
+    GameStat* getGameStat() const;
     
     enum State {
         START,
