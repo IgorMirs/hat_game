@@ -47,10 +47,9 @@ void GetTeamsState::get_nTeams(const sf::Event& event) {
         getTeams_input.setString(input_msg);
     }
     else if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
-        //input_msg = getTeams_input.getString(); //TODO 
-        // numberOfTeams = std::stoi(input_msg);
+        input_msg = getTeams_input.getString(); 
+        getGame()->setNumberOfTeams(std::stoi(input_msg));
         getTeamPlayers_prompt.setString("How many players will be on each team?\n> ");
-        
         input_msg.clear();
         nTeamsEntered = true;
     }
@@ -63,18 +62,8 @@ void GetTeamsState::get_nPlayers(const sf::Event& event) {
         getTeamPlayers_input.setString(input_msg);
     }
     else if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
-        //input_msg = getTeams_input.getString(); //TODO 
-        // numberOfTeams = std::stoi(input_msg);
+        input_msg = getTeams_input.getString();
+        getGame()->setNumberOfPlayers(std::stoi(input_msg));
         getGame()->changeGameState(GameState::GET_WORDS);   
     }
-    
-    
-    // if (event.text.unicode == '\n') {
-    //     input_msg.clear();
-    //     getTeams_input.setString(input_msg);
-    // }
-    // else {
-    //     input_msg += event.text.unicode;
-    //     getTeams_input.setString(input_msg);
-    // }
 }
