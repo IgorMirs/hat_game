@@ -12,8 +12,11 @@ public:
     void update(sf::Time delta);
     void draw(sf::RenderWindow& window);
 private:
-    sf::Text getTeams_prompt, getTeams_input;
+    sf::Text getTeams_prompt, getTeams_input, getTeamPlayers_prompt, getTeamPlayers_input;
     std::string input_msg;
+    bool nTeamsEntered;
+    void get_nTeams(const sf::Event& event);
+    void get_nPlayers(const sf::Event& event);
 };
 
 
