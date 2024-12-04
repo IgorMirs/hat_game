@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "StartState.h"
 #include "GetTeamsState.h"
+#include "GetWordsState.h"
 #include "SFML/Graphics.hpp"
 #include <string>
 #include <array>

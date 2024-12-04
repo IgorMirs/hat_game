@@ -2,29 +2,34 @@
 #include <iostream>
 #include <exception>
 
-Game::Game() :  m_window({1920u, 1080u}, "Hat Game"), numberOfTeams(0) 
+////////////////////////////////////////////////////////////
+Game::Game() :  
+m_window        ({1920u, 1080u}, "Hat Game"),
+numberOfTeams   (0) 
 {
     m_window.setFramerateLimit(144);
     loadFont(m_font);
     //init game states
     m_gameStates[GameState::State::START] = new StartState(this); 
     m_gameStates[GameState::State::GET_TEAMS] = new GetTeamsState(this); 
+    m_gameStates[GameState::State::GET_WORDS] = new GetWordsState(this); 
 
     changeGameState(GameState::START);
 }
 
+////////////////////////////////////////////////////////////
 Game::~Game() {
-    GameState* to_del = m_gameStates[GameState::State::GET_TEAMS];
-    delete to_del;
+    for(GameState* gs : m_gameStates) {
+        delete gs;
+    }
 }
 
-//****** Getters and Setters ******/
-
+////////////////////////////////////////////////////////////
 sf::Font& Game::getFont() {
     return m_font;
 }
 
-
+////////////////////////////////////////////////////////////
 void Game::run() {
     while (m_window.isOpen())
     {
@@ -32,7 +37,7 @@ void Game::run() {
             if (event.type == sf::Event::Closed) {
                 m_window.close();
             }
-            if (event.type == sf::Event::TextEntered || event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::TextEntered ) {
                 m_currentState->handle_input(event);
             }
         }
@@ -43,6 +48,7 @@ void Game::run() {
     }
 }
 
+////////////////////////////////////////////////////////////
 void Game::setText(sf::Text& text) {
     text.setCharacterSize(50);
     text.setFont(m_font);
@@ -50,6 +56,7 @@ void Game::setText(sf::Text& text) {
     text.setStyle(sf::Text::Bold);
 }
 
+////////////////////////////////////////////////////////////
 void Game::loadFont(sf::Font& font) {
     if (!font.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/fonts/arial.ttf")) {
         throw std::runtime_error("ERROR loading font!");
@@ -57,16 +64,18 @@ void Game::loadFont(sf::Font& font) {
     }
 }
 
+////////////////////////////////////////////////////////////
 void Game::changeGameState(GameState::State gameState) {
     m_currentState = m_gameStates[gameState];
 }
 
-
+////////////////////////////////////////////////////////////
 unsigned Game::getWindowWidth() const {
     sf::Vector2u v = m_window.getSize();
     return v.x;
 }
 
+////////////////////////////////////////////////////////////
 unsigned Game::getWindowHeight() const {
     sf::Vector2u v = m_window.getSize();
     return v.y;
