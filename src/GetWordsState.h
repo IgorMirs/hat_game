@@ -12,7 +12,10 @@ public:
     void draw(sf::RenderWindow& window);
     
 private:
-    sf::Text start_prompt;
+    sf::Text getWords_prompt;
+    sf::Text getWords_input;
+    std::string input_msg;
+
 };
 
 #endif
