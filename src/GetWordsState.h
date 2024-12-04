@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 
+#define WORDSNUMBER 3
 class GetWordsState : public GameState {
 public:
     GetWordsState(Game* game);
@@ -15,7 +16,11 @@ private:
     sf::Text getWords_prompt;
     sf::Text getWords_input;
     std::string input_msg;
+    int playerNumber;
+    int teamNumber;
+    int wordNumber;
 
+    std::string createPrompt(int tn, int pn, int wn);
 };
 
 #endif
