@@ -2,7 +2,8 @@
 #include "Game.h"
 #include <iostream>
 
-StartState::StartState(Game* game) : GameState(game) 
+StartState::StartState(Game* game) : 
+GameState(game)
 {
     configureText(start_prompt); //set text parameters
     start_prompt.setString("PRESS SPACE TO START THE GAME");
@@ -12,7 +13,7 @@ StartState::StartState(Game* game) : GameState(game)
 }
 
 void StartState::handle_input(const sf::Event& event) {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+    if (event.type == sf::Event::TextEntered && event.text.unicode == ' ') {
         getGame()->changeGameState(GameState::GET_TEAMS);
     }
 }
