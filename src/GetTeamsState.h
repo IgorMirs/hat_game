@@ -17,6 +17,8 @@ private:
     bool nTeamsEntered;
     void get_nTeams(const sf::Event& event);
     void get_nPlayers(const sf::Event& event);
+
+    void getInput(const sf::Event& event, sf::Text& text);
 };
 
 

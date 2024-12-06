@@ -11,13 +11,13 @@ nTeamsEntered   (false)
     configureText(getTeams_input);
     configureText(getTeamPlayers_prompt);
     configureText(getTeamPlayers_input);
-    getTeams_input.setPosition(40, 55);
     getTeams_prompt.setString("Enter the number of teams\n> ");
+    getTeams_input.setPosition(40, 55);
+    getTeams_input.setString("");
     getTeamPlayers_prompt.setString("");
     getTeamPlayers_prompt.setPosition(0, 110);
     getTeamPlayers_input.setString("");
     getTeamPlayers_input.setPosition(40, 165);
-    getTeams_input.setString("");
 }
 
 void GetTeamsState::handle_input(const sf::Event& event) {
@@ -41,29 +41,29 @@ void GetTeamsState::draw(sf::RenderWindow& window) {
 }
 
 void GetTeamsState::get_nTeams(const sf::Event& event) {
-    if (event.text.unicode > '1' && event.text.unicode <= '9') {
-        input_msg.clear();
-        input_msg += event.text.unicode;
-        getTeams_input.setString(input_msg);
-    }
-    else if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
+    getInput(event, getTeams_input);
+    if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
         input_msg = getTeams_input.getString(); 
         getGame()->setNumberOfTeams(std::stoi(input_msg));
         getTeamPlayers_prompt.setString("How many players will be on each team?\n> ");
-        input_msg.clear();
         nTeamsEntered = true;
     }
 }
 
 void GetTeamsState::get_nPlayers(const sf::Event& event) {
+    getInput(event, getTeamPlayers_input);
+    if (!getTeamPlayers_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
+        input_msg = getTeamPlayers_input.getString();
+        getGame()->setNumberOfPlayers(std::stoi(input_msg));
+        getGame()->changeGameState(GameState::GET_WORDS);   
+    }
+}
+
+
+void GetTeamsState::getInput(const sf::Event& event, sf::Text& text) {
     if (event.text.unicode > '1' && event.text.unicode <= '9') {
         input_msg.clear();
         input_msg += event.text.unicode;
-        getTeamPlayers_input.setString(input_msg);
-    }
-    else if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
-        input_msg = getTeams_input.getString();
-        getGame()->setNumberOfPlayers(std::stoi(input_msg));
-        getGame()->changeGameState(GameState::GET_WORDS);   
+        text.setString(input_msg);
     }
 }
