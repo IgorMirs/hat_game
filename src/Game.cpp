@@ -1,6 +1,8 @@
 #include "Game.h"
 #include <iostream>
 #include <exception>
+#include <cstdlib>
+#include <ctime>
 
 ////////////////////////////////////////////////////////////
 Game::Game() :  
@@ -14,7 +16,7 @@ numberOfTeams   (0)
     m_gameStates[GameState::State::START] = new StartState(this); 
     m_gameStates[GameState::State::GET_TEAMS] = new GetTeamsState(this); 
     m_gameStates[GameState::State::GET_WORDS] = new GetWordsState(this); 
-
+    m_gameStates[GameState::State::GUESS_WORDS] = new GuessWordsState(this); 
     changeGameState(GameState::START);
 }
 
@@ -101,3 +103,45 @@ int Game::getNumberOfPlayers() {
 int Game::getNumberOfTeams() {
     return numberOfTeams;
 }
+
+////////////////////////////////////////////////////////////
+void Game::addWord(const std::string& word) {
+    Word w(word);
+    words.push_back(w);
+}
+
+////////////////////////////////////////////////////////////
+void Game::printWords() const {
+    for (Word w : words) {
+        std::cout << w.getValue() << std::endl;
+    }
+}
+
+////////////////////////////////////////////////////////////
+std::string Game::pickWord() const {
+    if (words.empty()) {
+        return "empty";
+    }
+    else {
+        return words[rand() % words.size()].getValue();    
+    }
+    // int i = rand() % words.size();
+    // if (words.empty()) {
+    //     throw "Empty string";
+    // }
+    // while (words[i].getIsGuessed()) {
+    //     i = rand() % words.size();
+    // }
+    // return words[i].getValue();
+  
+}
+
+
+////////////////////////////////////////////////////////////
+Word::Word(const std::string& w) :
+value(w),
+isGuessed(false)
+{
+
+}
+
