@@ -16,7 +16,11 @@ wordNumber(1)
 }
 
 void GetWordsState::handle_input(const sf::Event& event) {
+    if (input_msg.empty() && event.text.unicode == '\n') {
+        return;
+    }
     if (event.text.unicode == '\n') {
+        getGame()->addWord(input_msg);
         input_msg.clear();
         getWords_input.setString(input_msg);
         wordNumber++;
@@ -30,7 +34,7 @@ void GetWordsState::handle_input(const sf::Event& event) {
             playerNumber = 1;
         }
         if (teamNumber > getGame()->getNumberOfTeams()) {
-            getGame()->changeGameState(GameState::START);
+            getGame()->changeGameState(GameState::GUESS_WORDS);
         }
         getWords_prompt.setString(createPrompt(teamNumber, playerNumber, wordNumber));
     }
@@ -52,7 +56,7 @@ void GetWordsState::draw(sf::RenderWindow& window) {
 
 std::string GetWordsState::createPrompt(int tn, int pn, int wn) {
     std::string s("");
-     s += "Team ";
+    s += "Team ";
     s += std::to_string(tn);
     s += "\nPlayer ";
     s += std::to_string(pn);

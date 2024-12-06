@@ -3,7 +3,7 @@
 
 #include "GameState.h"
 
-#define WORDSNUMBER 3
+#define WORDSNUMBER 1
 class GetWordsState : public GameState {
 public:
     GetWordsState(Game* game);
