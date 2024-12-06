@@ -11,12 +11,12 @@ public:
     GameState(Game* game);
     virtual ~GameState();
     Game* getGame() const;
-    GameStat* getGameStat() const;
     
     enum State {
         START,
         GET_TEAMS,
         GET_WORDS,
+        GUESS_WORDS,
         COUNT
     };
 
