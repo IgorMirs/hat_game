@@ -2,6 +2,7 @@
 #define GUESSWORDSSTATE_H
 
 #include "GameState.h"
+#include <SFML/Audio.hpp>
 
 class GuessWordsState : public GameState {
 public:
@@ -17,6 +18,9 @@ private:
     sf::Text clockText;
     uint roundTime;
     bool roundStart;
+    bool playBeep;
+    sf::SoundBuffer clockBuffer, endClockBuffer;
+    sf::Sound clockBeep;
 };
 
 #endif
