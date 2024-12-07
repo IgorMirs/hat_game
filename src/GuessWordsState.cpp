@@ -21,7 +21,13 @@ playBeep(true)
 
 void GuessWordsState::handle_input(const sf::Event& event) {
     if (event.text.unicode == ' ') {
-        wordToGuess.setString(getGame()->pickWord());
+        getGame()->markGuessedWord();
+        if (getGame()->isAllWordsGuessed()) {
+            getGame()->changeGameState(State::START);
+        }
+        else {
+            wordToGuess.setString(getGame()->pickWord());
+        }
     }
 }
      
