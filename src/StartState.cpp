@@ -5,7 +5,17 @@
 StartState::StartState(Game* game) : 
 GameState(game)
 {
-    configureText(start_prompt); //set text parameters
+    // Load a sprite to display
+    if (!texture.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/img/hat.jpg")) {
+        exit(EXIT_FAILURE);
+    }
+    sprite.setTexture(texture);
+    sprite.setOrigin(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().top);
+    sprite.setPosition(game->getWindowWidth() / 2.f, sprite.getLocalBounds().getPosition().y);
+    sprite.setScale(0.2f, 0.2f);
+
+    //set text parameters
+    configureText(start_prompt); 
     start_prompt.setString("PRESS SPACE TO START THE GAME");
     start_prompt.setOrigin(start_prompt.getGlobalBounds().getSize() / 2.f + start_prompt.getLocalBounds().getPosition());
     start_prompt.setPosition(game->getWindowWidth() / 2.f, game->getWindowHeight() / 2.f);
@@ -31,4 +41,5 @@ void StartState::draw(sf::RenderWindow& window) {
     if (displayText == false) {
         window.draw(start_prompt);
     }
+    window.draw(sprite);
 }

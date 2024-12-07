@@ -14,6 +14,8 @@ public:
 private:
     sf::Text start_prompt;
     bool displayText;
+    sf::Texture texture;
+    sf::Sprite sprite;
 };
 
 #endif
