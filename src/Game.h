@@ -8,6 +8,7 @@ public:
     Word(const std::string& w = "");
     std::string getValue() const {return value; }
     bool getIsGuessed() const {return isGuessed; }
+    void setIsGuessed(bool val) { isGuessed = val; }
 private:
     std::string value;
     bool isGuessed;
@@ -52,7 +53,9 @@ public:
     int         getNumberOfTeams();
     void        addWord(const std::string& word);
     void        printWords() const;
-    std::string pickWord() const;
+    std::string pickWord();
+    void        markGuessedWord();
+    bool        isAllWordsGuessed() const;
     
 private:
     sf::RenderWindow m_window;
@@ -64,6 +67,8 @@ private:
     int numberOfPlayers;
     int numberOfTeams;
     std::vector<Word> words;
+    int currentWord;
+    int numberOfGuessedWords;
 };
 
 #endif //GAME_H

@@ -8,8 +8,11 @@
 Game::Game() :  
 m_window        ({1920u, 1080u}, "Hat Game"),
 numberOfPlayers (0),
-numberOfTeams   (0)
+numberOfTeams   (0),
+currentWord(-1),
+numberOfGuessedWords(0)
 {
+    srand(time(NULL));
     m_window.setFramerateLimit(144);
     loadFont(m_font);
     //init game states
@@ -118,24 +121,32 @@ void Game::printWords() const {
 }
 
 ////////////////////////////////////////////////////////////
-std::string Game::pickWord() const {
+std::string Game::pickWord() {
     if (words.empty()) {
-        return "empty";
+        return "";
     }
     else {
-        return words[rand() % words.size()].getValue();    
+        int i = rand() % words.size();
+        while (words[i].getIsGuessed()) {
+            i = rand() % words.size();
+        }
+        currentWord = i;
+        return words[i].getValue();    
     }
-    // int i = rand() % words.size();
-    // if (words.empty()) {
-    //     throw "Empty string";
-    // }
-    // while (words[i].getIsGuessed()) {
-    //     i = rand() % words.size();
-    // }
-    // return words[i].getValue();
-  
 }
 
+////////////////////////////////////////////////////////////
+void Game::markGuessedWord() {
+    if (currentWord >= 0 && currentWord < words.size()) {
+        words[currentWord].setIsGuessed(true);
+        numberOfGuessedWords++;
+    }
+}
+
+////////////////////////////////////////////////////////////
+bool Game::isAllWordsGuessed() const {
+    return (numberOfGuessedWords == words.size());
+}
 
 ////////////////////////////////////////////////////////////
 Word::Word(const std::string& w) :
