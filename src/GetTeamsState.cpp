@@ -45,6 +45,7 @@ void GetTeamsState::get_nTeams(const sf::Event& event) {
     if (!getTeams_input.getString().isEmpty() && event.text.unicode == '\n') { //number of teams is entered
         input_msg = getTeams_input.getString(); 
         getGame()->setNumberOfTeams(std::stoi(input_msg));
+        getGame()->initScore(std::stoi(input_msg) + 1);
         getTeamPlayers_prompt.setString("How many players will be on each team?\n> ");
         nTeamsEntered = true;
     }

@@ -17,8 +17,8 @@ GameState(game)
     //set text parameters
     configureText(start_prompt); 
     start_prompt.setString("PRESS SPACE TO START THE GAME");
-    start_prompt.setOrigin(start_prompt.getGlobalBounds().getSize() / 2.f + start_prompt.getLocalBounds().getPosition());
-    start_prompt.setPosition(game->getWindowWidth() / 2.f, game->getWindowHeight() / 2.f);
+    centerTextHorizontally(start_prompt);
+    centerTextVertically(start_prompt);
     displayText = true;
 }
 
