@@ -26,6 +26,7 @@ private:
 #include "GetTeamsState.h"
 #include "GetWordsState.h"
 #include "GuessWordsState.h"
+#include "ShowScoreState.h"
 #include "SFML/Graphics.hpp"
 
 #include <vector>
@@ -37,26 +38,31 @@ public:
     Game();
     ~Game();
 
-    void        run();
-    void        setText(sf::Text& text);
+    void            run();
+    void            setText(sf::Text& text);
 
-    sf::Font&   getFont();
+    sf::Font&       getFont();
     
-    unsigned    getWindowWidth() const;
-    unsigned    getWindowHeight() const;
+    unsigned        getWindowWidth() const;
+    unsigned        getWindowHeight() const;
+    int             getGameRound() const;
 
-    void        changeGameState(GameState::State gameState);
+    void            changeGameState(GameState::State gameState);
 
-    void        setNumberOfPlayers(int np);
-    void        setNumberOfTeams(int np);
-    int         getNumberOfPlayers();
-    int         getNumberOfTeams();
-    void        addWord(const std::string& word);
-    void        printWords() const;
-    std::string pickWord();
-    void        markGuessedWord();
-    bool        isAllWordsGuessed() const;
-    
+    void            setNumberOfPlayers(int np);
+    void            setNumberOfTeams(int np);
+    void            setGameRound(int r);
+    int             getNumberOfPlayers();
+    int             getNumberOfTeams();
+    void            addWord(const std::string& word);
+    void            printWords() const;
+    std::string     pickWord();
+    void            markGuessedWord();
+    bool            isAllWordsGuessed() const;
+    void            markAllWordsNotGuessed();
+    void            initScore(int);
+    void            addScore(int teamNumber);
+    std::vector<int> getScore() const;
 private:
     sf::RenderWindow m_window;
     GameState* m_currentState;
@@ -69,6 +75,9 @@ private:
     std::vector<Word> words;
     int currentWord;
     int numberOfGuessedWords;
+    std::vector<int> score;
+    int gameRound;
+
 };
 
 #endif //GAME_H

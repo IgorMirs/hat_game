@@ -10,7 +10,8 @@ m_window        ({1920u, 1080u}, "Hat Game"),
 numberOfPlayers (0),
 numberOfTeams   (0),
 currentWord(-1),
-numberOfGuessedWords(0)
+numberOfGuessedWords(0),
+gameRound(1)
 {
     srand(time(NULL));
     m_window.setFramerateLimit(144);
@@ -20,6 +21,7 @@ numberOfGuessedWords(0)
     m_gameStates[GameState::State::GET_TEAMS] = new GetTeamsState(this); 
     m_gameStates[GameState::State::GET_WORDS] = new GetWordsState(this); 
     m_gameStates[GameState::State::GUESS_WORDS] = new GuessWordsState(this); 
+    m_gameStates[GameState::State::SHOW_SCORE] = new ShowScoreState(this); 
     changeGameState(GameState::START);
 }
 
@@ -146,6 +148,47 @@ void Game::markGuessedWord() {
 ////////////////////////////////////////////////////////////
 bool Game::isAllWordsGuessed() const {
     return (numberOfGuessedWords == words.size());
+}
+
+////////////////////////////////////////////////////////////
+void Game::markAllWordsNotGuessed() {
+    for (int i = 0; i < words.size(); i++) {
+        words[i].setIsGuessed(false);
+    }
+    numberOfGuessedWords = 0;
+}
+
+////////////////////////////////////////////////////////////
+void Game::initScore(int size) {
+    if (size > 0) {
+        score.resize(size);
+        for (int i = 0; i < size; i++) {
+            score[i] = 0;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////
+void Game::addScore(int teamNumber) {
+    if (teamNumber < 0 || teamNumber >= score.size()) {
+        return;
+    }
+    score[teamNumber]++;
+}
+
+////////////////////////////////////////////////////////////
+std::vector<int> Game::getScore() const {
+    return score;
+}
+
+////////////////////////////////////////////////////////////
+void Game::setGameRound(int r) {
+    gameRound = r;
+}
+
+////////////////////////////////////////////////////////////
+int Game::getGameRound() const {
+    return gameRound;
 }
 
 ////////////////////////////////////////////////////////////
