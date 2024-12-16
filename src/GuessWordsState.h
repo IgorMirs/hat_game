@@ -21,6 +21,7 @@ private:
     bool playBeep;
     sf::SoundBuffer clockBuffer, endClockBuffer;
     sf::Sound clockBeep;
+    int currentTeam;
 };
 
 #endif

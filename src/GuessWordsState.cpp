@@ -5,14 +5,17 @@
 
 GuessWordsState::GuessWordsState(Game* game) : 
 GameState(game),
-roundTime(10),
+roundTime(2),
 roundStart(true),
-playBeep(true)
+playBeep(true),
+currentTeam(1)
 {
     configureText(wordToGuess);
     configureText(clockText);
     wordToGuess.setCharacterSize(100);
-    if (!clockBuffer.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/sound/beep.mp3") || !endClockBuffer.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/sound/end_beep.mp3")) {
+    if (!clockBuffer.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/sound/beep.mp3") 
+                                    || !endClockBuffer.loadFromFile("/Users/igor_air/Documents/coding/01_hat_game/sound/end_beep.mp3")) 
+    {
         throw std::runtime_error("ERROR loading sound!");
         exit(EXIT_FAILURE);
     }
@@ -22,8 +25,11 @@ playBeep(true)
 void GuessWordsState::handle_input(const sf::Event& event) {
     if (event.text.unicode == ' ') {
         getGame()->markGuessedWord();
+        getGame()->addScore(currentTeam);
         if (getGame()->isAllWordsGuessed()) {
-            getGame()->changeGameState(State::START);
+            getGame()->setGameRound(getGame()->getGameRound() + 1);
+            getGame()->markAllWordsNotGuessed();
+            getGame()->changeGameState(State::SHOW_SCORE);
         }
         else {
             wordToGuess.setString(getGame()->pickWord());
@@ -49,7 +55,8 @@ void GuessWordsState::update(sf::Time delta) {
         roundStart = true;
         clockBeep.setBuffer(endClockBuffer);
         clockBeep.play();
-        getGame()->changeGameState(GameState::START);
+        currentTeam = (currentTeam) % (getGame()->getNumberOfTeams()) + 1;
+        getGame()->changeGameState(GameState::SHOW_SCORE);
     }
     else if (seconds < 6) {
         clockText.setFillColor(sf::Color::Red);
@@ -58,8 +65,8 @@ void GuessWordsState::update(sf::Time delta) {
         }
     }
     clockText.setString(std::to_string(seconds));
-    wordToGuess.setOrigin(wordToGuess.getGlobalBounds().getSize() / 2.f + wordToGuess.getLocalBounds().getPosition());
-    wordToGuess.setPosition(getGame()->getWindowWidth() / 2.f, getGame()->getWindowHeight() / 2.f);
+    centerTextVertically(wordToGuess);
+    centerTextHorizontally(wordToGuess);
     clockText.setPosition(getGame()->getWindowWidth() - clockText.getGlobalBounds().width - 15, clockText.getLocalBounds().top);
 }
     
