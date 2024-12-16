@@ -13,7 +13,7 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp src/Game.cpp src/GameState.cpp src/StartState.cpp src/GetTeamsState.cpp src/GetWordsState.cpp src/GuessWordsState.cpp)
+add_executable(main src/main.cpp src/Game.cpp src/GameState.cpp src/StartState.cpp src/GetTeamsState.cpp src/GetWordsState.cpp src/GuessWordsState.cpp src/ShowScoreState.cpp)
 target_link_libraries(main PRIVATE sfml-graphics sfml-audio)
 target_compile_features(main PRIVATE cxx_std_17)
 
