@@ -17,10 +17,13 @@ public:
         GET_TEAMS,
         GET_WORDS,
         GUESS_WORDS,
+        SHOW_SCORE,
         COUNT
     };
 
     void configureText(sf::Text& text);
+    void centerTextHorizontally(sf::Text& text);
+    void centerTextVertically(sf::Text& text);
 
     virtual void handle_input(const sf::Event& event) = 0;
     virtual void update(sf::Time delta) = 0;
